@@ -1,3 +1,9 @@
+let script = document.createElement('script');
+script.src = 'https://code.jquery.com/jquery-3.2.1.min.js';
+script.crossOrigin = 'anonymous';
+script.integrity = 'sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=';
+document.head.appendChild(script);
+
 $.ajax({
     url: "https://guidedlearning.oracle.com/player/latest/api/scenario/get/v_IlPvRLRWObwLnV5sTOaw/5szm2kaj/?callback=__5szm2kaj&amp;refresh=true&amp;env=dev&amp;type=startPanel&amp;vars%5Btype%5D=startPanel&amp;sid=none&amp;_=1582203987867",
     dataType: "jsonp",
@@ -43,7 +49,7 @@ $.ajax({
         $('.popover-content').append(contentDiv);
         var stepCount = $('[data-iridize-role="stepCount"]');
         var stepsCount = $('[data-iridize-role="stepsCount"]');
-        stepCount.html('0');
+        stepCount.html('1');
         stepsCount.html(steps.length);
         nextButon.click(function () {
             var current = Number(($('.step-span').attr('id').replace('#', '')));
@@ -57,7 +63,7 @@ $.ajax({
                 } else {
                     stepSpan.append('');
                 }
-                stepCount.html(newN);
+                stepCount.html(newN+1);
                 contentDiv.append(stepSpan);
             } else {
                 alert('Tour is completed');
@@ -75,7 +81,7 @@ $.ajax({
                 contentDiv.empty();
                 stepSpan = $('<span id="' + newC + '" class="step-span"></span>');
                 stepSpan.append(prevStep.action.contents['#content']);
-                stepCount.html(newC);
+                stepCount.html(newC+1);
                 contentDiv.append(stepSpan);
             } else {
                 alert('Start the tour');
