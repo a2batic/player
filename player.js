@@ -41,6 +41,10 @@ $.ajax({
         stepSpan.append(steps[0].action.contents['#content']);
         contentDiv.append(stepSpan);
         $('.popover-content').append(contentDiv);
+        var stepCount = $('[data-iridize-role="stepCount"]');
+        var stepsCount = $('[data-iridize-role="stepsCount"]');
+        stepCount.html('0');
+        stepsCount.html(steps.length);
         nextButon.click(function () {
             var current = Number(($('.step-span').attr('id').replace('#', '')));
             var newN = current + 1;
@@ -53,6 +57,7 @@ $.ajax({
                 } else {
                     stepSpan.append('');
                 }
+                stepCount.html(newN);
                 contentDiv.append(stepSpan);
             } else {
                 alert('Tour is completed');
@@ -70,6 +75,7 @@ $.ajax({
                 contentDiv.empty();
                 stepSpan = $('<span id="' + newC + '" class="step-span"></span>');
                 stepSpan.append(prevStep.action.contents['#content']);
+                stepCount.html(newC);
                 contentDiv.append(stepSpan);
             } else {
                 alert('Start the tour');
@@ -79,6 +85,14 @@ $.ajax({
         //add function for close button
         var close = $('[data-iridize-role="closeBt"]');
         close.click(function() {
+            contentDiv.empty();
+            $('.stFooter').remove();
+            close.remove();
+        })
+
+        //add function for Remind button
+        var remind = $('[data-iridize-role="laterBt"]');
+        remind.click(function() {
             contentDiv.empty();
             $('.stFooter').remove();
             close.remove();
