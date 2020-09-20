@@ -9,7 +9,7 @@ $.ajax({
         var steps = response.data.structure.steps;
         var cssStyle = $('<style>' + response.data.css + '</style>');
         $('head').append(cssStyle);
-        var nextButon=$('.next-btn');
+        
         var arr = response.data.structure.steps;
         var mainDiv = $('<div></div>');
 
@@ -42,7 +42,32 @@ $.ajax({
         $('.popover-content').css('padding', '0');
         $('.sttip').css('height', '100%');
         $('.tooltip').css('height', '100%');
-              
+
+        //add function to next button
+        var nextButon=$('.next-btn');
+        var contentDiv = $('<div class="step-content"></div>');
+        var stepSpan = $('<span id="0" class="step-span"></span>');
+        stepSpan.append(steps[0].action.contents['#content']);
+        contentDiv.append(stepSpan);
+        $('.popover-content').append(contentDiv);
+        nextButon.click(function() {
+            var current = Number(($('.step-span').attr('id').replace('#', '')));
+            if(steps[current+1]){
+            var nextStep = steps[current+1];
+            contentDiv.empty();
+            stepSpan = $('<span id="'+current+1+'" class="step-span"></span>');
+            if(nextStep.followers && nextStep.followers[0] && nextStep.followers[0].condition){
+                stepSpan.append(nextStep.action.contents['#content']);
+            } else {
+                stepSpan.append('');
+            }
+            
+            contentDiv.append(stepSpan);
+        } else {
+            alert('Tour is completed');
+        }
+          
+          });              
     }
 });
 
