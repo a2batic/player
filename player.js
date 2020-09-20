@@ -9,20 +9,11 @@ $.ajax({
         var steps = response.data.structure.steps;
         var cssStyle = $('<style>' + response.data.css + '</style>');
         $('head').append(cssStyle);
-
-        var arr = response.data.structure.steps;
+        
         var mainDiv = $('<div></div>');
-
-
         mainDiv.addClass('sttip');
         mainDiv.attr('id', 'main-player');
-        var arr = response.data.structure.steps.map((step) => {
-            return step.id;
-        })
-
         mainDiv.append(tooltip);
-        //mainDiv.append(hoverTip);
-
         $('body').append(mainDiv);
 
         //append Google page to main div;
@@ -84,5 +75,13 @@ $.ajax({
                 alert('Start the tour');
             }
         });
+
+        //add function for close button
+        var close = $('[data-iridize-role="closeBt"]');
+        close.click(function() {
+            contentDiv.empty();
+            $('.stFooter').remove();
+            close.remove();
+        })
     }
 });
